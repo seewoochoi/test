@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="orders">
+	
+	<insert id="create" parameterType="OrdersDTO">
+	insert into orders(order_num, o_pay,  o_req, o_address, r_code, m_id , o_mileage)
+	values(#{order_num},#{o_pay},#{o_req},#{o_address},#{r_code},#{m_id},#{o_mileage})
+	</insert>
+	<select id="read" parameterType="int" resultType="OrdersDTO">
+	select order_num, o_pay, o_req, o_address,r_code from orders where order_num = #{order_num}
+	</select>
+	<delete id="delete" parameterType="int">
+	delete from orders
+	where order_num = #{order_num}	
+	</delete>
+	<delete id="deleteAll" parameterType="String">
+	delete from member
+	where m_id = #{m_id}	
+	</delete>
+	<select id="list" parameterType="String" resultType="OrdersDTO">
+	select * from Orders where m_id = #{m_id} 
+	</select>
+	
+	<update id="update" parameterType="String">
+	update member set m_mileage = m_mileage + 
+	(select mileage from mileage_info where member.m_grade = mileage_info.m_grade), m_ordercnt = m_ordercnt+1
+	where m_id = #{m_id}
+	</update>
+
+	<select id="read2" parameterType="String" resultType="OrdersDTO">
+	select m_id from member where m_id = #{m_id} 
+	</select>
+	<update id="delete2">
+	update member
+	set m_mileage = m_mileage - (select mileage from mileage_info where member.m_grade = mileage_info.m_grade) 
+	+ ( select o_mileage from orders where order_num = #{order_num} ), m_ordercnt = m_ordercnt - 1
+	where m_id = #{m_id}
+	</update>
+
+</mapper>

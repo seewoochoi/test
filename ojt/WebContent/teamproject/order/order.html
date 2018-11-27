@@ -1,0 +1,197 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title> 
+</head>
+<script src="//code.jquery.com/jquery-3.3.1.min.js"></script>
+<script type="text/javascript">
+function pointSet(name){
+	 var obj = this[name];
+	 var set = this["settlement"];
+	 var point = document.getElementById("point");
+	 var p = parseInt(point.firstChild.nodeValue, 10);
+	 for (var i=0; i<obj.length; i++){
+	  if(p <= obj[i].value){
+	   set[i].value = p;
+	   p=0;
+	  }else{
+	   set[i].value = obj[i].value;
+	   p -= parseInt(obj[i].value, 10);
+	  }
+	 }
+	 
+	}
+function incheck(f){
+	if(f.address.value==""){
+		alert("주소를 입력해주세요");
+		return false;
+	}
+	if(f.phone.value=""){
+		alert("번호를 입력해주세요")
+		return false;
+	}
+}
+      $( document ).ready( function() {
+        $( '.check-all' ).click( function() {
+          $( '.ab' ).prop( 'checked', this.checked );
+        } );
+      } );
+
+
+function checkOnly(c){
+
+var n = document.getElementsByClassName('paymentM');
+var m;
+
+for (m = 0; m < n.length; m++) {
+  if(n[m].value != c) n[m].checked = false;
+}
+} 
+
+function checkOnlyOne(b){
+
+var x = document.getElementsByClassName('pointchecks');
+var i;
+
+for (i = 0; i < x.length; i++) {
+  if(x[i].value != b) x[i].checked = false;
+}
+}
+
+</script> 
+<body>
+<FORM>
+적립 포인트: <span id="point">1000</span><br />
+<INPUT TYPE="text" NAME="settlement_" onblur="pointSet.call(this.form, this.name)">
+<INPUT TYPE="text" NAME="settlement"><br />
+
+<INPUT TYPE="text" NAME="settlement_" onblur="pointSet.call(this.form, this.name)">
+<INPUT TYPE="text" NAME="settlement"><br />
+
+<INPUT TYPE="text" NAME="settlement_" onblur="pointSet.call(this.form, this.name)">
+<INPUT TYPE="text" NAME="settlement"><br />
+
+<INPUT TYPE="text" NAME="settlement_" onblur="pointSet.call(this.form, this.name)">
+<INPUT TYPE="text" NAME="settlement"><br />
+
+<INPUT TYPE="text" NAME="settlement_" onblur="pointSet.call(this.form, this.name)">
+<INPUT TYPE="text" NAME="settlement"><br />
+</FORM>
+<form name="frm"action="pay" method="post" onsubmit="return incheck(this)">
+	<table>   
+	
+		<tr> 
+			<th>배달정보</th>
+			<td><input type="text" name="address" placeholder="(필수)상세주소입력"></td>
+		</tr>
+		<tr>
+			<th>전화번호</th>
+			<td><input type="text" name="phone" placeholder="(필수)전화번호입력"></td>
+			<td><button name="frm" onsubmit="check()">인증하기</button></td>
+		</tr>
+		<tr> 
+			<th>안심전화번호</th>
+			<td><input type="checkbox" name="safe"></td>
+		</table>
+		
+		<div name="needList" id="needList" style="width:840px">
+<table width="750" border="0" cellpadding="2" cellspacing="2" >
+  <tr>
+    <td colspan="1"><div align="left" style="font-size:20px;">주문시 요구사항 </div></td>
+    </tr>
+  <tr style="background-color: #FFFF33; "> 
+  <tr>
+  <td><div><textarea rows="5" cols="80" placeholder="주문시 요청사항이 있으시면 남겨주세요 단,주류 등 청소년 유해물품관련 단어는 입력하실 수 없습니다."></textarea></div></td>
+		</tr> 
+	</table>  
+	</div> 
+	<div name="payment" id="payment" style="width:840px">
+<table width="750" border="0" cellpaddinbg="2" cellspacing="2">
+	<tr>
+		<th colspan="1"><div align="left" style="color:red; font-size:20px;">결제수단 선택(현장결제 불가능)</div></th>
+	</tr> 
+	<tr>
+		<td><div><strong>알아서배달할게 결제</strong><span class="stxt" style="font-size:10px;">|웹에서 선결제</span></div></td>
+	</tr>  
+	<tr> 
+	<td><div class="btn-group"> 
+	<label>
+                <i class="icon-check icon-npay"><input class="paymentM" type="checkbox" name="payment"
+                		value="naverpay" required="required" onclick="checkOnly(this.value);">네이버페이</i></label>
+    <label>
+          		<i class="icon-check icon-npay"><input class="paymentM" type="checkbox" name="payment"
+          				value="cardpay" required="required" onclick="checkOnly(this.value);">신용카드</i></label>
+    <label class="btn btn-default active">
+          		<i class="icon-check icon-npay"><input class="paymentM" type="checkbox" name="payment"
+          				value="phonepay" required="required" onclick="checkOnly(this.value);">휴대전화</i></label>
+	</div></td> 
+	</tr> 
+</table> 
+	</div> 
+
+	<table class="btn-point-group"> 
+	 	<tr>   
+	 		<th><div style="font-size:20px;" align="left";>할인항목 선택</div></th>
+	 	</tr>	 
+	 	<tr>   
+	 	<td><div class="form-group"><label id="coupon">쿠폰번호</label>&nbsp;&nbsp;<input type="text" placeholder="쿠폰번호를 입력해주세요">&nbsp;&nbsp;
+	 	<a href="*" onclick="loaction.href='a'">적용</a></div></td>  
+	 	</tr> 
+	 	
+	 	<tr>
+	 	<td><br><div class="daychecks-group"><label id="coupon">마일리지<span style="color:red; font-size:15px;">&nbsp;| 1000마일리지 부터 사용가능 |</span></label>&nbsp;&nbsp;  
+	 	<i class="icon-check"><input class="pointchecks" onclick="checkOnlyOne(this.value);" type="checkbox" name="point" value="1000">1000마일리지&nbsp;&nbsp;</i>
+	 	<i class="icon-check"><input class="pointchecks" onclick="checkOnlyOne(this.value);" type="checkbox" name="point" value="2000">2000마일리지&nbsp;&nbsp;</i>  
+	 	<i class="icon-check"><input class="pointchecks" onclick="checkOnlyOne(this.value);" type="checkbox" name="point" value="3000">3000마일리지&nbsp;&nbsp;</i>   
+	 	<i class="icon-check">※ 직접입력하기&nbsp;<input class="daychecks" type="text" placeholder=" 숫자만 입력해주세요" style="text-align:center ">&nbsp;&nbsp;</i>
+	 	<a href="*" onclick="loaction.href='a'">적용</a>&nbsp;&nbsp;&nbsp;&nbsp;<span style="font-size:5px;">|마일리지는 한달에 한번씩 초기화 됩니다.|</span></div></td>
+	 	</tr>       
+	 	      
+	</table>
+	<table>
+		<tr>
+			<th><div>주문내역</div></th>
+		</tr>
+		<tr>
+		 	<td><div><%=dto.foodcode%></div></td>
+		</tr>
+		<tr>
+		 	<td><%=dto.foodcode%></div></td>
+		</tr> 
+		<tr>
+		 	<td><div><%=dto.foodcode%></div></td>
+		</tr>
+		<tr>
+		 	<td><div></div></td>
+		</tr>
+ <tr><td><p><input type="checkbox" name="all" class="check-all"> <label>전체동의</label></p></td></tr>
+
+ <tr><td><input type="checkbox" name="cb1" class="ab"> <label>SMS 수신동의</label></td></tr>
+ <tr><td><input type="checkbox" name="cb2" class="ab"> <label>저기요 이용약관에 동의합니다. &nbsp;&nbsp;<a href="agree1.html">(전문보기)</a></label></td></tr>
+ <tr><td><input type="checkbox" name="cb3" class="ab"> <label>개인정보 수집 및 이용에 동의합니다. &nbsp;&nbsp;<a href="agree2.html">(전문보기)</a></label></td></tr>
+ <tr><td><input type="checkbox" name="cb4" class="ab"> <label>개인정보 제3자 제공에 동의합니다.  &nbsp;&nbsp;<a href="agree3.html">(전문보기)</a></label></td></tr>
+
+	</table>
+    
+
+
+	
+		
+			
+			
+<div class="bottom">
+<input type="submit" value="등록">
+<input type="button" value="취소" onclick="history.back()">
+</div>
+
+
+
+	 
+</form>
+	
+			
+		
+
+</body>
+</html>
